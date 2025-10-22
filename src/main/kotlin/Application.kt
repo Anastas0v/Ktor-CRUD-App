@@ -6,6 +6,7 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.routing.routing
+import kotlinx.serialization.json.Json
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
@@ -13,13 +14,19 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     install(ContentNegotiation) {
-        json()
+        json(
+            Json {
+                prettyPrint = true
+                ignoreUnknownKeys = true
+                explicitNulls = false
+                isLenient = true
+            }
+        )
     }
 
     DatabaseFactory.init(environment)
 
     routing {
-        configureRouting()
         userRoutes()
     }
 }
