@@ -1,6 +1,6 @@
 package com
 
-import com.dto.User
+import com.dto.Customer
 import io.ktor.server.application.*
 import io.ktor.server.request.receive
 import io.ktor.server.response.*
@@ -12,9 +12,9 @@ fun Application.configureRouting() {
             call.respondText("Hello World!")
         }
 
-        post("/"){
-            val text = call.receive<User>()
-            call.respond(text)
+        post("/json") {
+            val customer = call.receive<Customer>()
+            call.respond(customer)
         }
     }
 }
