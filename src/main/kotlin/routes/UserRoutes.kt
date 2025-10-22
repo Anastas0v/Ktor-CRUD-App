@@ -1,18 +1,17 @@
 package com.routes
 
 import com.dto.User
-import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import com.repository.UserRepository
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 
-fun Application.userRoutes() {
+fun Routing.userRoutes() {
     val userRepository = UserRepository()
 
-    routing {
-        get("/users") {
+    route("/users") {
+        get {
             call.respond(userRepository.getAll())
         }
 
@@ -27,8 +26,16 @@ fun Application.userRoutes() {
 
         // body user
         post {
-            val user = call.receive<User>()
-            call.respond(userRepository.save(user))
+            try {
+                val user = call.receive<User>()
+                val savedUser = userRepository.save(user)
+                call.respond(savedUser)
+            } catch (e: Exception) {
+                call.respondText(
+                    "Invalid request body: ${e.localizedMessage}",
+                    status = HttpStatusCode.BadRequest
+                )
+            }
         }
 
         // /id && body user

@@ -26,8 +26,8 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.4")
 
     // --- JSON Serialization ---
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0")
-    implementation("io.ktor:ktor-server-content-negotiation:3.0.0")
+    implementation("io.ktor:ktor-server-content-negotiation")
+    implementation("io.ktor:ktor-serialization-kotlinx-json")
 
     // --- Tests ---
     testImplementation(libs.ktor.server.test.host)
