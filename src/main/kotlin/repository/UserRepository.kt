@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
 import org.jetbrains.exposed.sql.transactions.transaction
 
-object UserRepository {
+class UserRepository {
     // map from Users to User(DTO)
     fun getAll(): List<User> = transaction {
         Users.selectAll().map{
